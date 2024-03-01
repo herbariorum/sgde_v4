@@ -1,5 +1,5 @@
 https://github.com/herbariorum/sgde_v4.git
-senha git: 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
+senha git: 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
 
 echo "# sgde_v4" >> README.md
 git init

@@ -47,6 +47,7 @@ public class GenericDao<T> {
                 }
             }
         } catch (SQLException | ReflectiveOperationException e) {
+            System.out.println("Erro "+e);
             throw new ExceptionDAO("Ocorreu o seguinte erro ao ler os registros\n" + e.getMessage());
         }
         return objeto;
