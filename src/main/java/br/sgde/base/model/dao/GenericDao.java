@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,17 @@ public class GenericDao<T> {
         return this.connection;
     }
 
-    public int create(String insertSQL, Object... parametros) throws ExceptionDAO {
-        try (var stmt = connection.prepareStatement(insertSQL);) {
+    public void executeUpdate(String sql, Object... parametros) throws ExceptionDAO {
+        try (var stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             for (int i = 0; i < parametros.length; i++) {
                 stmt.setObject(i + 1, parametros[i]);
             }
-            return stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new ExceptionDAO("A criação do registro falhou, nenhuma linha afetada.");
+            }
+            
+    
         } catch (SQLException e) {
             throw new ExceptionDAO("Ocorreu o seguinte erro ao salvar os registros\n" + e.getMessage());
         }
@@ -47,10 +53,41 @@ public class GenericDao<T> {
                 }
             }
         } catch (SQLException | ReflectiveOperationException e) {
-            System.out.println("Erro "+e);
+
             throw new ExceptionDAO("Ocorreu o seguinte erro ao ler os registros\n" + e.getMessage());
         }
         return objeto;
+    }
+
+    public List<T> listById(String listSQL, Long value) throws ExceptionDAO {
+        List<T> resultados = new ArrayList<>();
+        try (var stmt = connection.prepareStatement(listSQL)) {
+            stmt.setLong(1, value);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    T objeto = createObjectFromResultSet(rs);
+                    resultados.add(objeto);
+                }
+            }
+        } catch (SQLException | ReflectiveOperationException e) {
+            throw new ExceptionDAO("Ocorreu o seguinte erro ao ler os registros\n" + e.getMessage());
+        }
+        return resultados;
+    }
+
+    public List<T> readAll(String listSQL) throws ExceptionDAO {
+        List<T> resultados = new ArrayList<>();
+        try (var stmt = connection.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(listSQL)) {
+                while (rs.next()) {
+                    T objeto = createObjectFromResultSet(rs);
+                    resultados.add(objeto);
+                }
+            }
+        } catch (SQLException | ReflectiveOperationException e) {
+            throw new ExceptionDAO("Ocorreu o seguinte erro ao ler os registros\n" + e.getMessage());
+        }
+        return resultados;
     }
 
     public List<T> read(String listSQL, String value) throws ExceptionDAO {

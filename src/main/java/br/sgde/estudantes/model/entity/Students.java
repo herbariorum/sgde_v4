@@ -25,11 +25,14 @@ public class Students {
     private String nacionalidade;
     private String ufnascimento;
     private String cidadenascimento;
-    private BigDecimal salario;
     
     private Endereco endereco;
 
-    public Students(Long idstudent, String nome, String cpf, LocalDate dta_nasc, String sexo, boolean status, String nomemae, String nomepai, String telefonemae, String telefonepai, String nacionalidade, String ufnascimento, String cidadenascimento, BigDecimal salario, Endereco endereco) {
+    
+    public Students() {
+    } 
+
+    public Students(Long idstudent, String nome, String cpf, LocalDate dta_nasc, String sexo, boolean status, String nomemae, String nomepai, String telefonemae, String telefonepai, String nacionalidade, String ufnascimento, String cidadenascimento, Endereco endereco) {
         this.idstudent = idstudent;
         this.nome = nome;
         this.cpf = cpf;
@@ -42,17 +45,14 @@ public class Students {
         this.telefonepai = telefonepai;
         this.nacionalidade = nacionalidade;
         this.ufnascimento = ufnascimento;
-        this.cidadenascimento = cidadenascimento;
-        this.salario = salario;
+        this.cidadenascimento = cidadenascimento;  
         this.endereco = endereco;
     }
 
 
-    public Students() {
-    }
 
- 
-
+    
+    
     public Long getIdStudent() {
         return idstudent;
     }
@@ -92,6 +92,8 @@ public class Students {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
+
+
 
     public boolean isStatus() {
         return status;
@@ -165,13 +167,7 @@ public class Students {
         this.cidadenascimento = cidadenascimento;
     }
 
-    public BigDecimal getSalario() {
-        return salario;
-    }
 
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
-    }
 
     public Endereco getEndereco() {
         return endereco;
@@ -183,10 +179,10 @@ public class Students {
 
     @Override
     public String toString() {
-        return "Students{" + "idstudent=" + idstudent + ", nome=" + nome + ", cpf=" + cpf + ", dta_nasc=" + dta_nasc + ", sexo=" + sexo + ", status=" + status + ", nomemae=" + nomemae + ", nomepai=" + nomepai + ", telefonemae=" + telefonemae + ", telefonepai=" + telefonepai + ", nacionalidade=" + nacionalidade + ", ufnascimento=" + ufnascimento + ", cidadenascimento=" + cidadenascimento + ", salario=" + salario + ", endereco=" + endereco + '}';
+        return "Students{" + "idstudent=" + idstudent + ", nome=" + nome + ", cpf=" + cpf + ", dta_nasc=" + dta_nasc + ", sexo=" + sexo + ", status=" + status + ", nomemae=" + nomemae + ", nomepai=" + nomepai + ", telefonemae=" + telefonemae + ", telefonepai=" + telefonepai + ", nacionalidade=" + nacionalidade + ", ufnascimento=" + ufnascimento + ", cidadenascimento=" + cidadenascimento + ", endereco=" + endereco + '}';
     }
 
-    
+
     
     
 }

@@ -16,4 +16,14 @@ public class EnderecoDao  extends GenericDao<Endereco>{
         String listSQL = "select * from endereco where student_id = ?";
         return findById(listSQL, id);
     }
+    
+//    public int save(Endereco endereco) throws ExceptionDAO{
+//        String saveSql = "";
+//        return executeUpdate(saveSql, endereco);
+//    }
+//    
+//    public int update(Endereco endereco) throws ExceptionDAO{
+//        String updateSql = "";
+//        return executeUpdate(updateSql, endereco);
+//    }
 }
